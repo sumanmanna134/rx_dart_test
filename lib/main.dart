@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
+import 'package:testing_rx_dart/views/homse_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,35 +27,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class HomePage extends HookWidget {
-  final String title;
-  const HomePage({Key? key, required this.title}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final subject = useMemoized(() => BehaviorSubject<String>(), [key]);
-    useEffect(() => subject.close, [subject]);
-    return Scaffold(
-      appBar: AppBar(
-        title: StreamBuilder<String>(
-          stream: subject.stream.distinct(),
-          initialData: 'Please start to typing...',
-          builder: ((context, snapshot) {
-            return Text(snapshot.requireData);
-          }),
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: TextField(
-          onChanged: subject.sink.add,
-        ),
-      ),
+      home: const HomePage(),
     );
   }
 }
